@@ -1,5 +1,10 @@
 .markdown {
-  @apply text-lg leading-relaxed;
+  @apply text-2xl leading-relaxed text-gray-900;
+  min-width: 100%;
+  max-width: 1200px;  /* Define a largura máxima */
+  margin: 0 auto;     /* Centraliza o conteúdo */
+     /* Espaçamento lateral */
+  box-sizing: border-box; /* Garante que o padding não afete a largura do conteúdo */
 }
 
 .markdown p,
@@ -9,10 +14,137 @@
   @apply my-6;
 }
 
+/* Estilo para cabeçalhos */
+.markdown h1 {
+  @apply text-4xl font-bold mt-14 mb-6 leading-tight text-black;
+}
+
 .markdown h2 {
-  @apply text-3xl mt-12 mb-4 leading-snug;
+  @apply text-3xl font-semibold mt-12 mb-4 leading-snug text-black;
 }
 
 .markdown h3 {
-  @apply text-2xl mt-8 mb-4 leading-snug;
+  @apply text-2xl font-medium mt-8 mb-4 leading-snug text-black;
+}
+
+.markdown h4 {
+  @apply text-xl font-medium mt-6 mb-4 leading-snug text-gray-800;
+}
+
+.markdown h5,
+.markdown h6 {
+  @apply text-lg font-medium mt-4 mb-2 leading-tight text-gray-700;
+}
+
+/* Estilo para listas ordenadas e não ordenadas */
+.markdown ul {
+  @apply list-disc ml-8; /* Marcadores com margem maior */
+}
+
+.markdown ol {
+  @apply list-decimal ml-8; /* Numeração com margem maior */
+}
+
+.markdown li {
+  @apply mb-2; /* Espaço entre os itens */
+}
+
+/* Estilo para checklist (tarefas) */
+.task-list-item {
+  @apply flex items-center mb-2 text-gray-800; /* Flex para alinhar checkbox e texto */
+}
+
+.task-list-item input[type="checkbox"] {
+  @apply mr-3 w-5 h-5 rounded-sm border border-gray-600 cursor-pointer; /* Adiciona bordas, tamanhos e aparência */
+  accent-color: #1f2937; /* Cor do checkbox preta (cinza escuro) */
+  transition: all 0.3s ease; /* Transição suave */
+}
+
+.task-list-item input[type="checkbox"]:checked {
+  @apply bg-black; /* Muda a cor de fundo quando marcado */
+}
+
+.task-list-item input[type="checkbox"]:hover {
+  @apply border-gray-900; /* Cor de borda no hover */
+}
+
+.task-list-item input[type="checkbox"]:disabled {
+  @apply cursor-not-allowed opacity-50; /* Opacidade reduzida para checkboxes desativados */
+}
+
+/* Estilo para blockquotes */
+.markdown blockquote {
+  @apply pl-6 border-l-4 border-black text-gray-800 italic bg-gray-100 rounded-md py-2 px-4;
+}
+
+/* Estilo para tabelas */
+.markdown table {
+  @apply w-full border-collapse overflow-hidden rounded-lg my-6;
+}
+
+.markdown th {
+  @apply bg-gray-200 text-left p-2 border border-gray-300 font-semibold text-black;
+}
+
+.markdown td {
+  @apply p-2 border border-gray-300 text-gray-700;
+}
+
+/* Estilo para links */
+.markdown a {
+  @apply text-black underline hover:text-gray-800 transition duration-200;
+}
+
+/* Estilo para imagens */
+.markdown img {
+  @apply w-full rounded-md shadow-md mt-6 mb-6;
+  max-width: 100%; /* Faz com que a imagem não ultrapasse a largura da tela */
+}
+
+/* Estilo para código inline */
+.markdown code {
+  @apply  px-2 py-1 rounded text-sm font-mono text-gray-100;
+}
+
+/* Estilo para blocos de código */
+.markdown pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto my-6;
+  font-family: 'Fira Code', monospace; /* Fonte específica para código */
+}
+
+.markdown pre code {
+  @apply text-sm; /* Fonte menor dentro de blocos de código */
+}
+
+/* Estilo para links automáticos */
+.markdown a[href^="http"]::after {
+  content: " ↗";
+  @apply text-sm text-gray-500;
+}
+
+/* Estilo para imagens responsivas */
+.markdown img {
+  @apply mx-auto rounded shadow-md max-w-full h-auto;
+}
+
+/* Adiciona separadores horizontais */
+.markdown hr {
+  @apply border-t border-gray-300 my-6;
+}
+
+/* Estilo geral para listas embutidas */
+.markdown ol > li {
+  @apply ml-8; /* Ajusta margens para sublistas */
+}
+
+.markdown ul > li > ul,
+.markdown ol > li > ol {
+  @apply list-disc ml-8 mt-2; /* Sublistas */
+}
+
+/* Estilo para o foco */
+.markdown a:focus,
+.markdown button:focus,
+.markdown input[type="checkbox"]:focus {
+  @apply outline-none ring-2 ring-offset-2 ring-black;
 }
