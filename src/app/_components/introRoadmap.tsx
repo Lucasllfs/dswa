@@ -4,7 +4,7 @@ import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
 import { RiHomeLine } from "react-icons/ri";
 import { FaRegMap } from "react-icons/fa";
 
-export function Intro() {
+export function IntroRoadmap() {
 
   //items: { title: string; icon: React.ReactNode; href: string }[];
   const items = [
@@ -27,7 +27,7 @@ export function Intro() {
 </h4>
 
       <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-tight md:pr-8">
-        DSWA
+        Roadmap
       </h1>
       
     </section>
