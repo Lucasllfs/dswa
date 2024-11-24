@@ -14,7 +14,39 @@ interface TimelineEntry {
 export default function Roadmap() {
 
   const data: TimelineEntry[] = [
-   
+    {
+      title: "2021",
+      content: (
+        <div>
+          <p>Q1: Launch of the project</p>
+          <p>Q2: Launch of the project</p>
+          <p>Q3: Launch of the project</p>
+          <p>Q4: Launch of the project</p>
+        </div>
+      ),
+    },
+    {
+      title: "2022",
+      content: (
+        <div>
+          <p>Q1: Launch of the project</p>
+          <p>Q2: Launch of the project</p>
+          <p>Q3: Launch of the project</p>
+          <p>Q4: Launch of the project</p>
+        </div>
+      ),
+    },
+    {
+      title: "2023",
+      content: (
+        <div>
+          <p>Q1: Launch of the project</p>
+          <p>Q2: Launch of the project</p>
+          <p>Q3: Launch of the project</p>
+          <p>Q4: Launch of the project</p>
+        </div>
+      ),
+    },
   ];
   
 
@@ -24,7 +56,7 @@ export default function Roadmap() {
         <IntroRoadmap />
         
        
-    {/* <RoadmapLine data={data} /> */}
+     <RoadmapLine data={data} /> 
 
         {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
       </Container>
