@@ -17,7 +17,7 @@ export function IntroRoadmap() {
 
   return (
     <>
-        <section className="flex-col md:flex-row flex items-baseline md:justify-between mt-8 mb-8 md:mb-4">
+        <section className="flex-col md:flex-row flex items-baseline md:justify-between mt-8 mb-2 md:mb-2">
       <h4 className="text-center md:text-left text-lg mt-5 md:pl-8">
   <img
     src="/assets/logo/logoPreto.svg"
