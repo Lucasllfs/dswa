@@ -1,5 +1,5 @@
 .markdown {
-  @apply text-2xl leading-relaxed text-gray-900;
+  @apply text-lg leading-relaxed text-gray-900;
   min-width: 100%;
   max-width: 1200px;  /* Define a largura máxima */
   margin: 0 auto;     /* Centraliza o conteúdo */
