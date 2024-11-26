@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   description: `Data Science Warriors Academy is a community of data science enthusiasts who are passionate about learning and sharing knowledge.`,
   openGraph: {
     images: [HOME_OG_IMAGE_URL],
+    
   },
 };
 
