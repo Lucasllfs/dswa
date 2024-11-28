@@ -1,120 +1,83 @@
 ---
-title: "Preview Mode for Static Generation"
-excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus."
-coverImage: "/assets/blog/preview/cover.jpg"
+title: "Two passions: Data Science and MMA. What happens when you combine the two?"
+excerpt: "As a big fan of MMA, I decided to apply some Data Science to the UFC, the biggest MMA event in the world. I chose one fight as the target of this study: Charles do Bronx, one of my favorite fighters, against Arman Tsarukyan, which took place at UFC 300 on April 13."
+coverImage: "/assets/blog/MMA/cover.jpeg"
 date: "2020-03-16T05:35:07.322Z"
 author:
-  name: Joe Haddad
-  picture: "/assets/blog/authors/joe.jpeg"
+  name: Rafael
+  picture: "/assets/blog/authors/jj.jpeg"
 ogImage:
-  url: "/assets/blog/preview/cover.jpg"
+  url: "/assets/blog/MMA/cover.jpeg"
 ---
 
 
-# Título Principal
 
-## Subtítulo
+# Data Science Meets UFC: Analyzing Sentiments for Charles do Bronx vs. Arman Tsarukyan
 
-Este é um parágrafo com **negrito**, *itálico*, ~~tachado~~, e [um link](https://example.com).
-
-### Lista Não Ordenada
-
-- Item 1
-  - Subitem 1.1
-  - Subitem 1.2
-- [x] Tarefa completa
-- [ ] Tarefa pendente
-
-### Lista Ordenada
-
-1. Primeiro item
-2. Segundo item
-   1. Subitem 2.1
-   2. Subitem 2.2
-
-### Bloco de Código
-
-```javascript
-function helloWorld() {
-  console.log("Hello, world!");
-}
-```
-
-### Citação
-
-> Esta é uma citação de exemplo.
-
-### Tabela
-
-| Nome     | Idade | Cidade      |
-|----------|-------|-------------|
-| João     | 25    | São Paulo   |
-| Maria    | 30    | Rio de Janeiro |
-| Carlos   | 22    | Belo Horizonte |
-
-### Imagem
-
-![Alt Text](https://via.placeholder.com/150)
-
-### Linha Horizontal
+As a big fan of MMA, I decided to apply some Data Science to the UFC, the biggest MMA event in the world. I chose one fight as the target of this study: **Charles do Bronx**, one of my favorite fighters, against **Arman Tsarukyan**, which took place at UFC 300 on **April 13**.
 
 ---
 
-### Inline Code
+## The Inspiration: Sentiments and Twitter Experts
 
-Texto com `código inline` no meio.
+I always follow the week leading up to the fights on Twitter to see what the (Twitter) experts have to say, and this sparked my curiosity:
 
-### Cabeçalhos Pequenos
+> **How do these experts' sentiments vary depending on the fight?**
+>
+> That is, what is their perception **before the fight**, **on the day of the fight**, and **after the event**?
 
-#### H4
-##### H5
-###### H6
+---
 
-### Links e Imagens com Títulos
+## Tweet Scraping: Overcoming Challenges
 
-[Link com título](https://example.com "Título do Link")
-![Imagem com título](https://via.placeholder.com/150 "Título da Imagem")
+To bring this idea to life, I first performed some **tweet scraping**. Unfortunately, since **Twitter became X** (thank you, Elon), this task has become much more complicated (aka expensive). As a result, I couldn’t gather a large number of tweets, collecting approximately **3,000 tweets**.
 
-### Texto em Bloco
+---
 
-```plaintext
-Texto puro em bloco.
-Usado para coisas sem formatação especial.
-```
+## Word Cloud: Charles do Bronx’s Positive Aura
 
-### Emoji
+With the mined tweets, it was already possible to get an idea of how fans perceived the fighters. Notice how the perception seems to be **positive towards Charles do Bronx** through the **Word Cloud** of tweets about him.
 
-:rocket: 🚀 :smile: 😄
+[Word Cloud Example](path/to/word-cloud-image.png)
 
-### HTML Inline
+---
 
-Este texto contém HTML inline: <span style="color: red;">vermelho</span>.
+## Sentiment Analysis: Vader from NLTK
 
-### Checklists Complexas
+To make the study a bit richer and more interesting, I applied a **Sentiment Analysis** technique: **Vader** from **NLTK**. Here’s how I processed the tweets:
 
-- [x] Planejar o projeto
-- [ ] Implementar a funcionalidade
-  - [x] Fazer a API
-  - [ ] Criar o frontend
-- [ ] Revisar código
-```
+1. **Sentiments Aggregation**:  
+   - Positive sentiments → **Positive numbers**  
+   - Negative sentiments → **Negative numbers**
 
-Este texto cobre uma ampla variedade de recursos Markdown para testar conversores.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+2. **Daily Sentiment Tracking**:  
+   This approach allowed me to calculate an **overall sentiment per day**, creating a timeline of how fans perceived each fighter.
 
-[ ] Buy groceries
-- [ ] Buy groceries
-- [ ] Buy groceries
-* [ ] Buy groceries
+---
 
->blockquote
+## Sentiment Graphs: Peaks and Drops
 
-`code`
+Here are the **sentiment graphs** for both **Charles do Bronx** and **Arman Tsarukyan**:
 
-I need to highlight these ==very important words==.
+### Charles do Bronx  
+*Graph showcasing sentiment trends for Charles.*
 
-Venenatis cras sed felis eget velit. Consectetur libero id faucibus nisl tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volutpat sed cras. Sed odio morbi quis commodo odio aenean sed adipiscing. Velit euismod in pellentesque massa placerat. Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed viverra tellus in. Nibh cras pulvinar mattis nunc sed. Luctus accumsan tortor posuere ac ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.
+### Arman Tsarukyan  
+*Graph showcasing sentiment trends for Arman.*
 
-## Lorem Ipsum
+**Observations:**
+- One fighter shows an **incredible sentiment peak** on **fight day (UFC 300)**.  
+- The other experiences a **notable drop in sentiment** during the same period.
 
-Tristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices. Aliquam sem et tortor consequat id porta nibh. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Diam vulputate ut pharetra sit amet. Ut tellus elementum sagittis vitae et leo. Arcu non odio euismod lacinia at quis risus sed vulputate.
+---
+
+## The Challenge: Guess the Winner
+
+Looking at the graphs, can you guess:
+
+1. **Who won the fight?**  
+2. **Who lost the fight?**
+
+---
+
+Let me know your thoughts, and I’ll reveal the answer in the next update!

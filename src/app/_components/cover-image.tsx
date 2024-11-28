@@ -6,9 +6,10 @@ type Props = {
   title: string;
   src: string;
   slug?: string;
+  isTiny?: boolean;
 };
 
-const CoverImage = ({ title, src, slug }: Props) => {
+const CoverImage = ({ title, src, slug, isTiny }: Props) => {
   const image = (
     <Image
       src={src}
@@ -17,7 +18,17 @@ const CoverImage = ({ title, src, slug }: Props) => {
         "hover:shadow-lg transition-shadow duration-200": slug,
       })}
       width={1300}
+      //cortar imagem sem distorcer
+      style={{
+        maxHeight: isTiny ? '360px' : '720px', // Limita a altura da imagem a 200px
+        objectFit: 'cover', // Corta a imagem para preencher o contêiner
+        width: '100%', // Garante que a imagem ocupe toda a largura do contêiner
+      }}
+      
+      layout="responsive"
+
       height={630}
+      
     />
   );
   return (
