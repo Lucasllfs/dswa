@@ -3,6 +3,7 @@ import { FloatingDock } from "@/components/ui/floating-dock";
 import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
 import { RiHomeLine } from "react-icons/ri";
 import { FaRegMap } from "react-icons/fa";
+import { MdOutlineLeaderboard } from "react-icons/md";
 
 export function Intro() {
 
@@ -10,6 +11,7 @@ export function Intro() {
   const items = [
     { title: "Home", icon: <RiHomeLine size={24} />, href: "/" },
     { title: "Roadmap", icon: <FaRegMap      size={24} />, href: "/roadmap" },
+    { title: "Leaderboard", icon: <MdOutlineLeaderboard      size={24} />, href: "/leaderboard" },
     // { title: "Blog", icon: <IconLayoutNavbarCollapse size={24} />, href: "/blog" },
     // { title: "Contact", icon: <IconLayoutNavbarCollapse size={24} />, href: "/contact" },
   ];
