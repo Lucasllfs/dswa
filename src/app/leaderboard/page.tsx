@@ -17,6 +17,7 @@ import {COMPETITIONS_ID}  from "@/ARQUIVOS PARA SEREM ALTERADOS PARA O SITE FUNC
 import {MEMBER_NAMES} from "@/ARQUIVOS PARA SEREM ALTERADOS PARA O SITE FUNCIONAR/teamName-membros"; // Importe a lista aqui
 
 
+
 interface LeaderboardEntry {
   teamId: number;
   teamName: string;
