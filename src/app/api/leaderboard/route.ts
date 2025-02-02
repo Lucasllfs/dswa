@@ -27,8 +27,13 @@ export async function GET(request: Request) {
     let leaderboard: any[] = [];
     const generateTeamId = () => Math.floor(10000 + Math.random() * 90000);
 
+    console.log("COMPETITIONS ID: ",COMPETITIONS_ID);
+    
+
     //ignora o primeiro lugar (geral)
-    for (let i = 1; i <= COMPETITIONS_ID.length; i++) {
+    for (let i = 1; i < COMPETITIONS_ID.length; i++) {
+      console.log("COMPETITION ID: ",COMPETITIONS_ID[i]);
+      console.log("https://www.kaggle.com/api/v1/competitions/${COMPETITIONS_ID[i]}/leaderboard/view`");
       try {
         const response = await axios.get(
           `https://www.kaggle.com/api/v1/competitions/${COMPETITIONS_ID[i]}/leaderboard/view`,
@@ -52,13 +57,14 @@ export async function GET(request: Request) {
     // Agrupar e somar os scores por membro
     const memberScores = MEMBER_NAMES.map((member) => {
       const memberSubmissions = leaderboard.filter((submission: any) => submission.teamName === member);
-      const totalScore = memberSubmissions.reduce((sum: any, submission: any) => sum + submission.publicScore, 0);
-      return { teamId: generateTeamId(), teamName: member, totalScore };
+      const totalScore = memberSubmissions.reduce((sum: any, submission: any) => sum + submission.score, 0);
+      return { teamId: generateTeamId(), teamName: member, score: totalScore };
     });
 
     // Ordenar por score
-    const sortedMemberScores = memberScores.sort((a, b) => b.totalScore - a.totalScore);
+    const sortedMemberScores = memberScores.sort((a, b) => b.score - a.score);
 
+    console.log("MEMBER SCORES GERAL: ",sortedMemberScores);
 
     return NextResponse.json(sortedMemberScores);
 
@@ -83,7 +89,8 @@ export async function GET(request: Request) {
 
     //ordernar por score
     const leaderboardSorted = leaderboard.sort((a: any, b: any) => b.publicScore - a.publicScore);    
-   
+    
+    console.log("LEADERBOARD GERAL : ",leaderboardSorted);
 
     return NextResponse.json(leaderboardSorted);
   } catch (error) {
