@@ -39,6 +39,10 @@ const RankingPage: NextPage = () => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [selectedCompetition, setSelectedCompetition] = useState("geral");
 
+  useEffect(() => {
+    getCompetitionRanking(selectedCompetition);
+  }, []);
+
   const getCompetitionRanking = async (competitionId: string) => {
     try {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";

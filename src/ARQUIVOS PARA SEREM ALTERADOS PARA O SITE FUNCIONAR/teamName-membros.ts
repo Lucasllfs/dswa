@@ -1,1 +1,1 @@
-export const MEMBER_NAMES = ["Penido Rafael", "Rick O Robert"];
+export const MEMBER_NAMES = ["Penido Rafael", "Rick O Robert", "ArielSadetsky18"];
