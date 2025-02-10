@@ -1,1 +1,16 @@
-export const MEMBER_NAMES = ["Rick O Robert", "ArielSadetsky18", "Thiago Proença", "Luis Felipi Souza", "Renan Grothe", "Guilherme Santos #2"];
+export const MEMBER_NAMES = ["Rick O Robert", 
+    "ArielSadetsky18", 
+    "Thiago Proença", 
+    "Luis Felipi Souza", 
+    "Renan Grothe", 
+    "Guilherme Santos #2",
+    "Pedro A Dorighello",
+    "Vanderlei Guilherme Andrade de Assis",
+    "joaomesa2",
+    "Wilker Silva Ribeiro",
+    "Mateus Matsuo",
+    "Felipe Bonadia",
+    "Lucas Goes",
+    "Andre Luis",
+    "daniellayukahirosue"
+];
