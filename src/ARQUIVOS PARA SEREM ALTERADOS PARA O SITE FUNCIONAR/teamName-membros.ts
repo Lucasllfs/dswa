@@ -10,7 +10,7 @@ export const MEMBER_NAMES = ["Rick O Robert",
     "Wilker Silva Ribeiro",
     "Mateus Matsuo",
     "Felipe Bonadia",
-    "Lucas Goes",
-    "Andre Luis",
+    "Lucas G Dias ",
+    "Andre Luis #2",
     "Yukaa"
 ];
