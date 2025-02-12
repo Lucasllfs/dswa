@@ -12,5 +12,6 @@ export const MEMBER_NAMES = ["Rick O Robert",
     "Felipe Bonadia",
     "Lucas G Dias ",
     "Andre Luis #2",
-    "Yukaa"
+    "Yukaa",
+    "Gabriel Streicher",
 ];
