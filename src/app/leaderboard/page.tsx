@@ -55,9 +55,9 @@ const RankingPage: NextPage = () => {
   };
 
   // Dados com os Members
-  const filteredRanking = leaderboard.filter((entry) =>
+  const filteredRanking = Array.isArray(leaderboard) ? leaderboard.filter((entry) =>
     MEMBER_NAMES.includes(entry.teamName)
-  ); 
+  ) : [];
 
   return (
     <div className="relative min-h-screen w-full bg-white p-8">

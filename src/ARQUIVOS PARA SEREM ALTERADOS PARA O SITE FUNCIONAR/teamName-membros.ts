@@ -1,4 +1,7 @@
-export const MEMBER_NAMES = ["Rick O Robert", 
+export const MEMBER_NAMES = [
+    "Penido Rafael",
+    "Rafael Penido", 
+    "Rick O Robert", 
     "ArielSadetsky18", 
     "Thiago Proença", 
     "Luis Felipi Souza", 
