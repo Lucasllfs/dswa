@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFileSync, existsSync, readFileSync } from 'fs';
-import { join } from 'path';
+import { supabase } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,34 +15,38 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Caminho para o arquivo CSV
-    const csvPath = join(process.cwd(), 'inscricoes.csv');
-    
-    // Cabeçalho do CSV
-    const header = 'Data/Hora,Nome Completo,RA,Telefone,Nível Python,Nível Estatística,Nível ML,Motivação\n';
-    
-    // Dados da nova inscrição
-    const currentDate = new Date().toLocaleString('pt-BR');
-    const csvLine = `"${currentDate}","${formData.nomeCompleto}","${formData.ra}","${formData.telefone}","${formData.pythonLevel}","${formData.estatisticaLevel}","${formData.mlLevel}","${formData.motivacao.replace(/"/g, '""')}"\n`;
-    
-    // Verificar se o arquivo existe
-    if (!existsSync(csvPath)) {
-      // Criar arquivo com cabeçalho
-      writeFileSync(csvPath, header + csvLine, 'utf8');
-    } else {
-      // Adicionar linha ao arquivo existente
-      const existingContent = readFileSync(csvPath, 'utf8');
-      writeFileSync(csvPath, existingContent + csvLine, 'utf8');
+    // Salvar no Supabase
+    const { data, error } = await supabase
+      .from('inscricoes')
+      .insert([
+        {
+          nome_completo: formData.nomeCompleto,
+          ra: formData.ra,
+          telefone: formData.telefone,
+          nivel_python: formData.pythonLevel,
+          nivel_estatistica: formData.estatisticaLevel,
+          nivel_ml: formData.mlLevel,
+          motivacao: formData.motivacao,
+          created_at: new Date().toISOString()
+        }
+      ])
+      .select();
+
+    if (error) {
+      console.error('Erro Supabase:', error);
+      return NextResponse.json(
+        { error: 'Erro ao salvar inscrição' },
+        { status: 500 }
+      );
     }
     
-    console.log(`Inscrição salva no arquivo: ${csvPath}`);
+    console.log(`Inscrição salva: ${formData.nomeCompleto}`);
     
     return NextResponse.json(
       { 
         message: 'Inscrição realizada com sucesso!',
         success: true,
-        data: formData,
-        savedTo: 'inscricoes.csv'
+        data: data[0]
       },
       { status: 200 }
     );

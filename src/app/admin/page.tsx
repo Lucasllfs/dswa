@@ -4,13 +4,14 @@ import { useState, useEffect } from 'react';
 import { Download, Users } from 'lucide-react';
 
 interface Inscricao {
-  dataHora: string;
-  nomeCompleto: string;
+  id: number;
+  created_at: string;
+  nome_completo: string;
   ra: string;
   telefone: string;
-  nivelPython: string;
-  nivelEstatistica: string;
-  nivelML: string;
+  nivel_python: number;
+  nivel_estatistica: number;
+  nivel_ml: number;
   motivacao: string;
 }
 
@@ -24,10 +25,10 @@ export default function AdminPage() {
 
   const fetchInscricoes = async () => {
     try {
-      const response = await fetch('/api/admin/inscricoes');
+      const response = await fetch('/api/admin');
       if (response.ok) {
         const data = await response.json();
-        setInscricoes(data.inscriptions || []);
+        setInscricoes(data.inscricoes || []);
       }
     } catch (error) {
       console.error('Erro ao carregar inscrições:', error);
@@ -36,26 +37,30 @@ export default function AdminPage() {
     }
   };
 
-  const baixarCSV = async () => {
-    try {
-      const response = await fetch('/api/admin/download-csv');
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `inscricoes_dswa_${new Date().toISOString().split('T')[0]}.csv`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      } else {
-        alert('Erro ao baixar CSV');
-      }
-    } catch (error) {
-      console.error('Erro:', error);
-      alert('Erro ao baixar CSV');
+  const baixarCSV = () => {
+    if (inscricoes.length === 0) {
+      alert('Nenhuma inscrição para exportar');
+      return;
     }
+
+    // Criar CSV
+    const header = 'Data/Hora,Nome Completo,RA,Telefone,Nível Python,Nível Estatística,Nível ML,Motivação\n';
+    const csvContent = inscricoes.map(inscricao => 
+      `"${new Date(inscricao.created_at).toLocaleString('pt-BR')}","${inscricao.nome_completo}","${inscricao.ra}","${inscricao.telefone}","${inscricao.nivel_python}","${inscricao.nivel_estatistica}","${inscricao.nivel_ml}","${inscricao.motivacao?.replace(/"/g, '""') || ''}"`
+    ).join('\n');
+
+    const csvData = header + csvContent;
+    
+    // Criar e baixar arquivo
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `inscricoes_dswa_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   if (loading) {
@@ -140,7 +145,7 @@ export default function AdminPage() {
                   {inscricoes.map((inscricao, index) => (
                     <tr key={index} className="hover:bg-gray-50">
                       <td className="px-6 py-4 text-sm text-gray-900">
-                        {inscricao.nomeCompleto}
+                        {inscricao.nome_completo}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-900">
                         {inscricao.ra}
@@ -149,13 +154,13 @@ export default function AdminPage() {
                         {inscricao.telefone}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-900">
-                        {inscricao.nivelPython}/5
+                        {inscricao.nivel_python}/5
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-900">
-                        {inscricao.nivelML}/5
+                        {inscricao.nivel_ml}/5
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
-                        {inscricao.dataHora?.split(' ')[0] || '-'}
+                        {new Date(inscricao.created_at).toLocaleDateString('pt-BR')}
                       </td>
                     </tr>
                   ))}

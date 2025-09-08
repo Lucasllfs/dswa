@@ -120,6 +120,13 @@ const InscricoesPage = () => {
           body: JSON.stringify(formData),
         });
         
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Inscrição salva:', result);
+        } else {
+          console.error('Erro ao salvar inscrição');
+        }
+        
         setTimeout(() => {
           setIsCompleted(true);
           setIsSubmitting(false);
