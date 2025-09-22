@@ -29,9 +29,16 @@ export function IntroRoadmap() {
   />
 </h4>
 
-      <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-tight md:pr-8">
-        Roadmap
-      </h1>
+      <div className="md:pr-8">
+        <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-tight text-right">
+          Roadmap
+        </h1>
+        <div className="mt-2 md:mt-4 text-right">
+         
+          <p className="text-xs text-gray-500 dark:text-gray-500 leading-relaxed">
+O roadmap DSWA é um guia de estudos 100% gratuito, estruturado em fases para facilitar o aprendizado. Ele começa com fundamentos matemáticos (álgebra linear, cálculo e probabilidade), passa por programação em Python e análise de dados, e segue para introdução ao Machine Learning. Todo o material é composto por cursos, vídeos e práticas selecionadas para quem deseja construir uma base sólida e avançar gradualmente até aplicações em inteligência artificial e ciência de dados.          </p>
+        </div>
+      </div>
       
     </section>
 
