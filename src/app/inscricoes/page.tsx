@@ -18,8 +18,20 @@ interface FormData {
 }
 
 const InscricoesPage = () => {
-  const [inscricoesAtivas, setInscricoesAtivas] = useState(true);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [inscricoesAtivas, setInscricoesAtivas] = useState(false); // Começa como false
   const [verificandoStatus, setVerificandoStatus] = useState(true);
+  const [formData, setFormData] = useState<FormData>({
+    nomeCompleto: '',
+    ra: '',
+    telefone: '',
+    pythonLevel: 0,
+    estatisticaLevel: 0,
+    mlLevel: 0,
+    motivacao: ''
+  });
 
   useEffect(() => {
     const verificarStatus = async () => {
@@ -68,24 +80,10 @@ const InscricoesPage = () => {
               </motion.button>
             </div>
           </div>
-          <Footer />
         </div>
       </div>
     );
   }
-
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState<FormData>({
-    nomeCompleto: '',
-    ra: '',
-    telefone: '',
-    pythonLevel: 0,
-    estatisticaLevel: 0,
-    mlLevel: 0,
-    motivacao: ''
-  });
 
   const questions = [
     {

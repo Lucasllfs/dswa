@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Variável simples para controlar o status
-let inscricoesAtivas = true;
+// Variável simples para controlar o status - começar como false (fechado)
+let inscricoesAtivas = false;
 
 export async function POST(request: NextRequest) {
   try {
