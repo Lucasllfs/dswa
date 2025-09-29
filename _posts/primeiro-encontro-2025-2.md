@@ -12,9 +12,9 @@ ogImage:
 
 🎉 **Primeiro Encontro Presencial do DSWA - 2025/2**
 
-📅 **Data:** 24 de setembro de 2025  
+📅 **Data:** 1 de outubro de 2025  
 ⏰ **Horário:** 13h  
-📍 **Local:** Laboratório de Redes  
+📍 **Local:** Será divulgado no dia 
 
 Estamos de volta! Após o sucesso do semestre anterior, o **DSWA (Data Science Workshop Academy)** retorna com uma nova turma e muitas novidades para você que quer mergulhar no universo da **Ciência de Dados** e **Machine Learning**.
 
