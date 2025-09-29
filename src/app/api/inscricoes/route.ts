@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { INSCRICOES_CONFIG } from '@/lib/config';
 
 export async function POST(request: NextRequest) {
   try {
-    // Verificar se as inscrições estão ativas via API
-    const configResponse = await fetch(new URL('/api/admin/config', request.url));
-    const config = await configResponse.json();
-    
-    if (!config.ativas) {
+    // Verificar se as inscrições estão ativas diretamente do config
+    if (!INSCRICOES_CONFIG.ativas) {
       return NextResponse.json(
-        { error: "As inscrições estão temporariamente fechadas. Aguarde novas informações." },
+        { error: INSCRICOES_CONFIG.mensagemFechadas },
         { status: 403 }
       );
     }

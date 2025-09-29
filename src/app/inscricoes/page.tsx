@@ -21,8 +21,6 @@ const InscricoesPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [inscricoesAtivas, setInscricoesAtivas] = useState(false); // Começa como false
-  const [verificandoStatus, setVerificandoStatus] = useState(true);
   const [formData, setFormData] = useState<FormData>({
     nomeCompleto: '',
     ra: '',
@@ -33,31 +31,8 @@ const InscricoesPage = () => {
     motivacao: ''
   });
 
-  useEffect(() => {
-    const verificarStatus = async () => {
-      try {
-        const response = await fetch('/api/admin/config');
-        const config = await response.json();
-        setInscricoesAtivas(config.ativas);
-      } catch (error) {
-        console.error('Erro ao verificar status:', error);
-      } finally {
-        setVerificandoStatus(false);
-      }
-    };
-    verificarStatus();
-  }, []);
-
-  if (verificandoStatus) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
-  }
-
-  // Verificar se as inscrições estão ativas
-  if (!inscricoesAtivas) {
+  // Verificar se as inscrições estão ativas diretamente do config
+  if (!INSCRICOES_CONFIG.ativas) {
     return (
       <div className="min-h-screen bg-white">
         <div className="container mx-auto px-4">
@@ -68,7 +43,7 @@ const InscricoesPage = () => {
                 Inscrições Fechadas
               </h1>
               <p className="text-xl text-gray-700 mb-8">
-                As inscrições estão temporariamente fechadas. Aguarde novas informações.
+                {INSCRICOES_CONFIG.mensagemFechadas}
               </p>
               <motion.button
                 whileHover={{ scale: 1.05 }}

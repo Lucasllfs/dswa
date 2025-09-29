@@ -19,11 +19,9 @@ interface Inscricao {
 export default function AdminPage() {
   const [inscricoes, setInscricoes] = useState<Inscricao[]>([]);
   const [loading, setLoading] = useState(true);
-  const [inscricoesAtivas, setInscricoesAtivas] = useState(true);
 
   useEffect(() => {
     fetchInscricoes();
-    fetchStatusInscricoes();
   }, []);
 
   const fetchInscricoes = async () => {
@@ -37,18 +35,6 @@ export default function AdminPage() {
       console.error('Erro ao carregar inscrições:', error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchStatusInscricoes = async () => {
-    try {
-      const response = await fetch('/api/admin/config');
-      if (response.ok) {
-        const data = await response.json();
-        setInscricoesAtivas(data.ativas);
-      }
-    } catch (error) {
-      console.error('Erro ao carregar status:', error);
     }
   };
 
@@ -76,27 +62,6 @@ export default function AdminPage() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
-
-  const toggleInscricoes = async () => {
-    const novoStatus = !inscricoesAtivas;
-    try {
-      const response = await fetch('/api/admin/config', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'toggle', ativas: novoStatus })
-      });
-
-      if (response.ok) {
-        setInscricoesAtivas(novoStatus);
-        alert(`Inscrições ${novoStatus ? 'ativadas' : 'desativadas'} com sucesso!`);
-      } else {
-        alert('Erro ao alterar status das inscrições');
-      }
-    } catch (error) {
-      console.error('Erro:', error);
-      alert('Erro ao alterar status das inscrições');
-    }
   };
 
   const limparInscricoes = async () => {
@@ -139,7 +104,7 @@ export default function AdminPage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-gray-50 p-6 rounded-lg border">
             <div className="flex items-center">
               <Users className="w-8 h-8 text-black mr-3" />
@@ -155,19 +120,19 @@ export default function AdminPage() {
               <div>
                 <p className="text-sm text-gray-600">Status das Inscrições</p>
                 <p className="text-lg font-bold text-black">
-                  {inscricoesAtivas ? 'Abertas' : 'Fechadas'}
+                  {INSCRICOES_CONFIG.ativas ? 'Abertas' : 'Fechadas'}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Edite src/lib/config.ts para alterar
                 </p>
               </div>
-              <button
-                onClick={toggleInscricoes}
-                className="p-2 hover:bg-gray-200 rounded-full transition-colors"
-              >
-                {inscricoesAtivas ? (
+              <div className="p-2">
+                {INSCRICOES_CONFIG.ativas ? (
                   <ToggleRight className="w-8 h-8 text-green-600" />
                 ) : (
                   <ToggleLeft className="w-8 h-8 text-gray-400" />
                 )}
-              </button>
+              </div>
             </div>
           </div>
 
@@ -180,15 +145,24 @@ export default function AdminPage() {
               <span>Baixar CSV</span>
             </button>
           </div>
+        </div>
 
-          <div className="bg-gray-50 p-6 rounded-lg border">
-            <button
-              onClick={limparInscricoes}
-              className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors w-full justify-center"
-            >
-              <Trash2 className="w-5 h-5" />
-              <span>Limpar Tudo</span>
-            </button>
+        {/* Botão de limpar separado */}
+        <div className="mb-8">
+          <div className="bg-red-50 p-6 rounded-lg border border-red-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-red-800">Zona de Perigo</h3>
+                <p className="text-sm text-red-600">Esta ação não pode ser desfeita</p>
+              </div>
+              <button
+                onClick={limparInscricoes}
+                className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              >
+                <Trash2 className="w-5 h-5" />
+                <span>Limpar Todas as Inscrições</span>
+              </button>
+            </div>
           </div>
         </div>
 
