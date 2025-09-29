@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Download, Users } from 'lucide-react';
+import { Download, Users, ToggleLeft, ToggleRight, Trash2 } from 'lucide-react';
+import { INSCRICOES_CONFIG } from '@/lib/config';
 
 interface Inscricao {
   id: number;
@@ -18,9 +19,11 @@ interface Inscricao {
 export default function AdminPage() {
   const [inscricoes, setInscricoes] = useState<Inscricao[]>([]);
   const [loading, setLoading] = useState(true);
+  const [inscricoesAtivas, setInscricoesAtivas] = useState(true);
 
   useEffect(() => {
     fetchInscricoes();
+    fetchStatusInscricoes();
   }, []);
 
   const fetchInscricoes = async () => {
@@ -34,6 +37,18 @@ export default function AdminPage() {
       console.error('Erro ao carregar inscrições:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchStatusInscricoes = async () => {
+    try {
+      const response = await fetch('/api/admin/config');
+      if (response.ok) {
+        const data = await response.json();
+        setInscricoesAtivas(data.ativas);
+      }
+    } catch (error) {
+      console.error('Erro ao carregar status:', error);
     }
   };
 
@@ -63,6 +78,49 @@ export default function AdminPage() {
     document.body.removeChild(link);
   };
 
+  const toggleInscricoes = async () => {
+    const novoStatus = !inscricoesAtivas;
+    try {
+      const response = await fetch('/api/admin/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'toggle', ativas: novoStatus })
+      });
+
+      if (response.ok) {
+        setInscricoesAtivas(novoStatus);
+        alert(`Inscrições ${novoStatus ? 'ativadas' : 'desativadas'} com sucesso!`);
+      } else {
+        alert('Erro ao alterar status das inscrições');
+      }
+    } catch (error) {
+      console.error('Erro:', error);
+      alert('Erro ao alterar status das inscrições');
+    }
+  };
+
+  const limparInscricoes = async () => {
+    if (!confirm('Tem certeza que deseja deletar TODAS as inscrições? Esta ação não pode ser desfeita.')) {
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/admin/limpar', {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        setInscricoes([]);
+        alert('Todas as inscrições foram removidas com sucesso!');
+      } else {
+        alert('Erro ao limpar inscrições');
+      }
+    } catch (error) {
+      console.error('Erro:', error);
+      alert('Erro ao limpar inscrições');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -81,7 +139,7 @@ export default function AdminPage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-gray-50 p-6 rounded-lg border">
             <div className="flex items-center">
               <Users className="w-8 h-8 text-black mr-3" />
@@ -93,12 +151,43 @@ export default function AdminPage() {
           </div>
 
           <div className="bg-gray-50 p-6 rounded-lg border">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Status das Inscrições</p>
+                <p className="text-lg font-bold text-black">
+                  {inscricoesAtivas ? 'Abertas' : 'Fechadas'}
+                </p>
+              </div>
+              <button
+                onClick={toggleInscricoes}
+                className="p-2 hover:bg-gray-200 rounded-full transition-colors"
+              >
+                {inscricoesAtivas ? (
+                  <ToggleRight className="w-8 h-8 text-green-600" />
+                ) : (
+                  <ToggleLeft className="w-8 h-8 text-gray-400" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 p-6 rounded-lg border">
             <button
               onClick={baixarCSV}
               className="flex items-center space-x-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors w-full justify-center"
             >
               <Download className="w-5 h-5" />
               <span>Baixar CSV</span>
+            </button>
+          </div>
+
+          <div className="bg-gray-50 p-6 rounded-lg border">
+            <button
+              onClick={limparInscricoes}
+              className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors w-full justify-center"
+            >
+              <Trash2 className="w-5 h-5" />
+              <span>Limpar Tudo</span>
             </button>
           </div>
         </div>

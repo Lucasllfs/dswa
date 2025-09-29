@@ -3,6 +3,17 @@ import { supabase } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
   try {
+    // Verificar se as inscrições estão ativas via API
+    const configResponse = await fetch(new URL('/api/admin/config', request.url));
+    const config = await configResponse.json();
+    
+    if (!config.ativas) {
+      return NextResponse.json(
+        { error: "As inscrições estão temporariamente fechadas. Aguarde novas informações." },
+        { status: 403 }
+      );
+    }
+
     const formData = await request.json();
     
     console.log('Nova inscrição recebida:', formData);

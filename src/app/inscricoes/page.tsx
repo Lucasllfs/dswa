@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Check, Star } from 'lucide-react';
 import Header from "@/app/_components/header";
 import Footer from "@/app/_components/footer";
+import { INSCRICOES_CONFIG } from '@/lib/config';
 
 interface FormData {
   nomeCompleto: string;
@@ -17,6 +18,62 @@ interface FormData {
 }
 
 const InscricoesPage = () => {
+  const [inscricoesAtivas, setInscricoesAtivas] = useState(true);
+  const [verificandoStatus, setVerificandoStatus] = useState(true);
+
+  useEffect(() => {
+    const verificarStatus = async () => {
+      try {
+        const response = await fetch('/api/admin/config');
+        const config = await response.json();
+        setInscricoesAtivas(config.ativas);
+      } catch (error) {
+        console.error('Erro ao verificar status:', error);
+      } finally {
+        setVerificandoStatus(false);
+      }
+    };
+    verificarStatus();
+  }, []);
+
+  if (verificandoStatus) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  // Verificar se as inscrições estão ativas
+  if (!inscricoesAtivas) {
+    return (
+      <div className="min-h-screen bg-white">
+        <div className="container mx-auto px-4">
+          <Header />
+          <div className="flex items-center justify-center min-h-[70vh]">
+            <div className="text-center space-y-6 max-w-2xl mx-auto">
+              <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">
+                Inscrições Fechadas
+              </h1>
+              <p className="text-xl text-gray-700 mb-8">
+                As inscrições estão temporariamente fechadas. Aguarde novas informações.
+              </p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3 bg-black text-white rounded-full font-semibold text-lg shadow-lg hover:bg-gray-800 transition-all duration-300"
+                onClick={() => window.location.href = '/'}
+              >
+                Voltar ao Início
+              </motion.button>
+            </div>
+          </div>
+          <Footer />
+        </div>
+      </div>
+    );
+  }
+
   const [currentStep, setCurrentStep] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
